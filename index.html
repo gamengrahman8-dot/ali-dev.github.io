@@ -1,33 +1,2998 @@
-<!DOCTYPE html>
-<html lang="fa">
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محصول جدید ما | فروشگاه آنلاین</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; direction: rtl; }
-        header { background: #333; color: white; padding: 1rem; text-align: center; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .product { text-align: center; margin: 2rem 0; }
-        .product img { max-width: 100%; height: auto; border-radius: 8px; }
-        .cta-button {
-            background: #ff6b6b; color: white; padding: 1rem 2rem; border: none;
-            border-radius: 4px; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
-        }
-        .cta-button:hover { background: #ff5252; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#09090b">
+<title>Tiki AI</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --bg:#09090b;
+  --panel:#111113;
+  --panel2:#18181b;
+  --panel3:#27272a;
+  --border:#2d2d32;
+  --text:#f4f4f5;
+  --muted:#a1a1aa;
+  --accent:#ff7900;
+  --accent2:#ff3d00;
+  --danger:#ef4444;
+  --green:#22c55e;
+}
+
+body.light{
+  --bg:#f7f7f8;
+  --panel:#fff;
+  --panel2:#f0f0f1;
+  --panel3:#e4e4e7;
+  --border:#d4d4d8;
+  --text:#18181b;
+  --muted:#71717a;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,"Segoe UI",Tahoma,sans-serif;
+}
+
+button,input,textarea{font:inherit}
+button{border:0;cursor:pointer}
+
+.app{
+  height:100dvh;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  background:
+    radial-gradient(circle at 50% -15%,rgba(255,121,0,.12),transparent 35%),
+    var(--bg);
+}
+
+/* HEADER */
+
+.header{
+  height:64px;
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  border-bottom:1px solid var(--border);
+  background:rgba(9,9,11,.88);
+  backdrop-filter:blur(18px);
+  z-index:10;
+}
+
+body.light .header{
+  background:rgba(255,255,255,.9);
+}
+
+.headerSide{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+.iconBtn{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  background:transparent;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.15s;
+}
+
+.iconBtn:active{transform:scale(.91)}
+.iconBtn:hover{background:var(--panel2)}
+
+svg{
+  width:21px;
+  height:21px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.brandName{
+  font-size:18px;
+  font-weight:800;
+}
+
+.brandStatus{
+  font-size:10px;
+  color:var(--green);
+  margin-top:3px;
+}
+
+/* CHAT */
+
+.chat{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:30px 16px 150px;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+
+.messages{
+  width:min(900px,100%);
+  margin:auto;
+}
+
+.empty{
+  min-height:65vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.empty h1{
+  font-size:34px;
+  margin:0 0 10px;
+}
+
+.empty p{
+  color:var(--muted);
+  font-size:17px;
+}
+
+/* MESSAGE */
+
+.message{
+  width:100%;
+  margin:0 0 34px;
+  animation:appear .14s ease;
+}
+
+@keyframes appear{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+
+/* AI LEFT */
+
+.message.ai{
+  display:flex;
+  justify-content:flex-start;
+  direction:ltr;
+}
+
+/* USER RIGHT */
+
+.message.user{
+  display:flex;
+  justify-content:flex-end;
+  direction:rtl;
+}
+
+.messageInner{
+  max-width:88%;
+}
+
+.message.user .messageInner{
+  max-width:84%;
+}
+
+.messageText{
+  font-size:20px;
+  line-height:1.9;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+
+.message.ai .messageText{
+  direction:rtl;
+  text-align:right;
+}
+
+.message.user .messageText{
+  direction:rtl;
+  text-align:right;
+}
+
+/* USER HAS A SUBTLE BUBBLE */
+
+.message.user .messageText{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:12px 17px;
+}
+
+/* AI NO BUBBLE */
+
+.message.ai .messageText{
+  background:transparent;
+  padding:0;
+}
+
+/* ACTIONS */
+
+.actions{
+  display:flex;
+  gap:3px;
+  margin-top:9px;
+}
+
+.actions button{
+  background:transparent;
+  color:var(--muted);
+  padding:6px 8px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+.actions button:hover{
+  color:var(--text);
+  background:var(--panel2);
+}
+
+/* CODE */
+
+.codeBlock{
+  direction:ltr;
+  margin:16px 0;
+  border:1px solid #303034;
+  border-radius:15px;
+  overflow:hidden;
+  background:#0c0c0e;
+}
+
+.codeHeader{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  color:#aaa;
+  border-bottom:1px solid #303034;
+  font-size:11px;
+}
+
+.copyCode{
+  background:#252529;
+  color:#fff;
+  padding:7px 11px;
+  border-radius:8px;
+  font-size:11px;
+}
+
+.codeContent{
+  margin:0;
+  padding:15px;
+  overflow:auto;
+  color:#eee;
+  font:14px/1.7 Consolas,Monaco,monospace;
+  white-space:pre;
+}
+
+.inlineCode{
+  direction:ltr;
+  display:inline-block;
+  background:var(--panel2);
+  padding:1px 6px;
+  border-radius:6px;
+  font-family:monospace;
+}
+
+/* STREAM CURSOR */
+
+.cursor{
+  display:inline-block;
+  width:2px;
+  height:21px;
+  margin-right:4px;
+  vertical-align:-3px;
+  background:var(--accent);
+  animation:blink .7s infinite;
+}
+
+@keyframes blink{
+  0%,50%{opacity:1}
+  51%,100%{opacity:0}
+}
+
+/* FILE */
+
+.fileCard{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--panel);
+}
+
+.fileCard img{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:9px;
+}
+
+.fileName{
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.fileType{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px;
+}
+
+/* COMPOSER */
+
+.composerArea{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:12;
+  padding:8px 10px 13px;
+  background:linear-gradient(to top,var(--bg) 65%,transparent);
+}
+
+.composer{
+  width:min(900px,100%);
+  margin:auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:0 10px 45px rgba(0,0,0,.28);
+  overflow:hidden;
+}
+
+.preview{
+  display:none;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  border-bottom:1px solid var(--border);
+}
+
+.preview.show{display:flex}
+
+.preview img{
+  width:46px;
+  height:46px;
+  border-radius:9px;
+  object-fit:cover;
+  display:none;
+}
+
+.previewInfo{
+  flex:1;
+  min-width:0;
+}
+
+.previewName{
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.previewSize{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.removeFile{
+  background:transparent;
+  color:var(--danger);
+  font-size:12px;
+}
+
+.inputRow{
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+  padding:8px;
+}
+
+textarea{
+  flex:1;
+  min-height:45px;
+  max-height:160px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  padding:9px 6px;
+  font-size:18px;
+  line-height:1.7;
+}
+
+textarea::placeholder{color:var(--muted)}
+
+.send{
+  width:45px;
+  height:45px;
+  border-radius:14px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.send.stop{background:#303034}
+
+/* PROFESSIONAL MENU */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.58);
+  opacity:0;
+  pointer-events:none;
+  transition:.18s;
+  z-index:30;
+}
+
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.sideMenu{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  width:min(350px,90vw);
+  background:var(--panel);
+  border-left:1px solid var(--border);
+  transform:translateX(105%);
+  transition:transform .22s cubic-bezier(.2,.8,.2,1);
+  z-index:40;
+  display:flex;
+  flex-direction:column;
+  box-shadow:-15px 0 45px rgba(0,0,0,.3);
+}
+
+.sideMenu.show{
+  transform:translateX(0);
+}
+
+.menuHeader{
+  height:70px;
+  min-height:70px;
+  padding:0 13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.menuTitle{
+  font-size:20px;
+  font-weight:800;
+}
+
+.menuBody{
+  flex:1;
+  overflow:auto;
+  padding:12px;
+}
+
+.newChatLarge{
+  width:100%;
+  padding:13px;
+  border-radius:13px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-weight:700;
+  margin-bottom:13px;
+}
+
+.menuSearch{
+  width:100%;
+  height:42px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:0;
+  background:var(--panel2);
+  color:var(--text);
+  padding:0 12px;
+  margin-bottom:12px;
+}
+
+.menuItem{
+  width:100%;
+  min-height:47px;
+  padding:11px 12px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  background:transparent;
+  color:var(--text);
+  text-align:right;
+}
+
+.menuItem:hover{
+  background:var(--panel2);
+}
+
+.menuItem svg{
+  color:var(--muted);
+}
+
+.menuDivider{
+  height:1px;
+  background:var(--border);
+  margin:12px 0;
+}
+
+.menuLabel{
+  color:var(--muted);
+  font-size:11px;
+  padding:4px 11px 8px;
+}
+
+.historyItem{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:10px;
+  border-radius:11px;
+  color:var(--muted);
+}
+
+.historyItem:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.historyTitle{
+  flex:1;
+  min-width:0;
+  font-size:12px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.historyDelete{
+  background:transparent;
+  color:var(--danger);
+  font-size:10px;
+}
+
+/* MODAL */
+
+.modalBack{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:17px;
+  background:rgba(0,0,0,.65);
+}
+
+.modalBack.show{display:flex}
+
+.modal{
+  width:min(440px,100%);
+  max-height:87vh;
+  overflow:auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;
+}
+
+.modalHeader{
+  padding:17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.modalTitle{
+  font-size:19px;
+  font-weight:800;
+}
+
+.modalBody{padding:16px}
+
+.setting{
+  padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.setting:last-child{border:0}
+
+.settingTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.setting strong{
+  font-size:14px;
+}
+
+.setting small{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.switch{
+  width:49px;
+  height:28px;
+  border-radius:20px;
+  background:#3f3f46;
+  position:relative;
+}
+
+.switch:after{
+  content:"";
+  position:absolute;
+  top:3px;
+  right:3px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
+}
+
+.switch.on{background:var(--accent)}
+.switch.on:after{transform:translateX(-21px)}
+
+.langs{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+}
+
+.langs button{
+  flex:1;
+  padding:10px;
+  border-radius:9px;
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.langs button.active{
+  background:var(--accent);
+  color:white;
+}
+
+.support{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+  margin-top:8px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:105px;
+  transform:translate(-50%,15px);
+  padding:10px 15px;
+  border-radius:10px;
+  background:#222225;
+  border:1px solid #3b3b40;
+  color:white;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:100;
+  white-space:nowrap;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(max-width:600px){
+
+  .chat{
+    padding:22px 13px 145px;
+  }
+
+  .messageText{
+    font-size:19px;
+  }
+
+  .messageInner,
+  .message.user .messageInner{
+    max-width:94%;
+  }
+
+  textarea{
+    font-size:17px;
+  }
+
+  .sideMenu{
+    width:90vw;
+  }
+}
+</style>
 </head>
+
 <body>
-    <header>
-        <h1>محصول شگفت‌انگیز ما</h1>
-    </header>
-    <div class="container">
-        <div class="product">
-            <img src="product-image.jpg" alt="محصول ما">
-            <h2>توضیحات محصول</h2>
-            <p>این محصول فوق‌العاده به شما کمک می‌کند تا در هر زمینه‌ای موفق شوید!</p>
-            <button class="cta-button">خرید همین حالا</button>
-        </div>
+
+<div class="app">
+
+<header class="header">
+
+  <div class="headerSide">
+
+    <button class="iconBtn" id="menuBtn">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <div>
+      <div class="brandName">Tiki AI</div>
+      <div class="brandStatus" id="status">آماده</div>
     </div>
+
+  </div>
+
+  <button class="iconBtn" id="newChat">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14"/>
+    </svg>
+  </button>
+
+</header>
+
+
+<main class="chat" id="chat">
+
+  <div class="messages" id="messages">
+
+    <div class="empty" id="empty">
+      <h1>Tiki AI</h1>
+      <p id="welcome">چه کاری می‌توانم برایت انجام دهم؟</p>
+    </div>
+
+  </div>
+
+</main>
+
+
+<div class="composerArea">
+
+  <div class="composer">
+
+    <div class="preview" id="preview">
+
+      <img id="previewImage">
+
+      <div class="previewInfo">
+        <div class="previewName" id="previewName"></div>
+        <div class="previewSize" id="previewSize"></div>
+      </div>
+
+      <button class="removeFile" id="removeFile">
+        حذف
+      </button>
+
+    </div>
+
+
+    <div class="inputRow">
+
+      <button class="iconBtn" id="attach">
+        <svg viewBox="0 0 24 24">
+          <path d="M21.4 11.6l-8.9 8.9a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7L9.7 17.7a2 2 0 01-2.8-2.8l8.5-8.5"/>
+        </svg>
+      </button>
+
+      <input
+        type="file"
+        id="file"
+        hidden
+        accept="image/*,.txt,.js,.html,.css,.json,.md,.csv"
+      >
+
+      <textarea
+        id="input"
+        rows="1"
+        placeholder="پیامت را بنویس..."
+      ></textarea>
+
+      <button class="send" id="send">
+        <svg viewBox="0 0 24 24">
+          <path d="M22 2L11 13"/>
+          <path d="M22 2l-7 20-4-9z"/>
+        </svg>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- MENU -->
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sideMenu" id="menu">
+
+  <div class="menuHeader">
+
+    <div class="menuTitle">Tiki AI</div>
+
+    <button class="iconBtn" id="closeMenu">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+
+  </div>
+
+
+  <div class="menuBody">
+
+    <button class="newChatLarge" id="newChatMenu">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      چت جدید
+    </button>
+
+
+    <input
+      class="menuSearch"
+      id="historySearch"
+      placeholder="جستجوی چت‌ها..."
+    >
+
+
+    <button class="menuItem" id="settingsBtn">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19 13a7 7 0 000-2l2-1-2-3-2 1a8 8 0 00-2-1l-.3-2h-4l-.3 2a8 8 0 00-2 1l-2-1-2 3 2 1a7 7 0 000 2l-2 1 2 3 2-1a8 8 0 002 1l.3 2h4l.3-2a8 8 0 002-1l2 1 2-3z"/>
+      </svg>
+      تنظیمات
+    </button>
+
+
+    <button class="menuItem" id="aboutBtn">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 11v5M12 8h.01"/>
+      </svg>
+      درباره Tiki AI
+    </button>
+
+
+    <div class="menuDivider"></div>
+
+    <div class="menuLabel">سابقه گفتگو</div>
+
+    <div id="history"></div>
+
+
+    <div class="menuDivider"></div>
+
+
+    <button class="menuItem" id="deleteAll">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3"/>
+      </svg>
+      پاک کردن همه چت‌ها
+    </button>
+
+  </div>
+
+</aside>
+
+
+<!-- SETTINGS -->
+
+<div class="modalBack" id="settingsModal">
+
+  <div class="modal">
+
+    <div class="modalHeader">
+      <div class="modalTitle">تنظیمات</div>
+
+      <button class="iconBtn" id="closeSettings">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+
+
+    <div class="modalBody">
+
+      <div class="setting">
+
+        <div class="settingTop">
+
+          <div>
+            <strong>حالت روشن</strong>
+            <small>تغییر ظاهر Tiki AI</small>
+          </div>
+
+          <button class="switch" id="themeSwitch"></button>
+
+        </div>
+
+      </div>
+
+
+      <div class="setting">
+
+        <strong>زبان</strong>
+
+        <small>زبان رابط برنامه</small>
+
+        <div class="langs">
+
+          <button id="faBtn" class="active">
+            فارسی
+          </button>
+
+          <button id="enBtn">
+            English
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="setting">
+
+        <strong>پشتیبانی</strong>
+
+        <small>
+          ارتباط با پشتیبانی Tiki AI
+        </small>
+
+        <button class="support" id="whatsapp">
+          پشتیبانی WhatsApp
+        </button>
+
+        <button class="support" id="telegram">
+          پشتیبانی Telegram
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <strong>درباره برنامه</strong>
+
+        <small>
+          Tiki AI V8
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ABOUT -->
+
+<div class="modalBack" id="aboutModal">
+
+  <div class="modal">
+
+    <div class="modalHeader">
+
+      <div class="modalTitle">
+        درباره Tiki AI
+      </div>
+
+      <button class="iconBtn" id="closeAbout">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <div class="modalBody">
+
+      <p style="font-size:16px;line-height:2">
+        Tiki AI یک دستیار هوش مصنوعی
+        برای گفتگو، برنامه‌نویسی،
+        تحلیل متن، تصویر و فایل است.
+      </p>
+
+      <p style="color:var(--muted);font-size:12px">
+        Version 8.0
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   API
+   ===================================================== */
+
+const API_KEY =
+  "l1jbuNUY6CannGd8nGUTpQiTaZAx2N1C";
+
+const API_URL =
+  "https://api.mistral.ai/v1/chat/completions";
+
+const TEXT_MODEL =
+  "mistral-small-latest";
+
+const VISION_MODEL =
+  "mistral-small-2506";
+
+
+/* =====================================================
+   STATE
+   ===================================================== */
+
+let chats = [];
+
+let currentId = null;
+
+let attached = null;
+
+let controller = null;
+
+let generating = false;
+
+let language = "fa";
+
+
+/*
+  مهم:
+  این متغیر مشخص می‌کند کاربر نزدیک پایین است یا نه.
+  اگر کاربر بالا رفته باشد، هیچ scrollTo انجام نمی‌دهیم.
+*/
+
+let userIsNearBottom = true;
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const chat =
+  document.getElementById("chat");
+
+const messages =
+  document.getElementById("messages");
+
+const empty =
+  document.getElementById("empty");
+
+const input =
+  document.getElementById("input");
+
+const send =
+  document.getElementById("send");
+
+const status =
+  document.getElementById("status");
+
+const toast =
+  document.getElementById("toast");
+
+const menu =
+  document.getElementById("menu");
+
+const overlay =
+  document.getElementById("overlay");
+
+
+/* =====================================================
+   STORAGE
+   ===================================================== */
+
+function save(){
+
+  try{
+
+    localStorage.setItem(
+      "tiki_ai_v8",
+      JSON.stringify(chats)
+    );
+
+  }catch(e){
+
+    console.log(e);
+
+  }
+
+}
+
+
+function load(){
+
+  try{
+
+    chats =
+      JSON.parse(
+        localStorage.getItem(
+          "tiki_ai_v8"
+        ) || "[]"
+      );
+
+  }catch(e){
+
+    chats=[];
+
+  }
+
+}
+
+
+/* =====================================================
+   HELPERS
+   ===================================================== */
+
+function id(){
+
+  return Date.now().toString(36)+
+    Math.random().toString(36).slice(2);
+
+}
+
+
+function escapeHTML(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function toastMessage(text){
+
+  toast.textContent=text;
+
+  toast.classList.add("show");
+
+  clearTimeout(
+    toastMessage.timer
+  );
+
+  toastMessage.timer=setTimeout(
+    ()=>{
+      toast.classList.remove("show");
+    },
+    1800
+  );
+
+}
+
+
+/* =====================================================
+   SMART SCROLL
+   ===================================================== */
+
+function checkScroll(){
+
+  const distance =
+    chat.scrollHeight -
+    chat.scrollTop -
+    chat.clientHeight;
+
+  userIsNearBottom =
+    distance < 120;
+
+}
+
+
+chat.addEventListener(
+  "scroll",
+  checkScroll,
+  {passive:true}
+);
+
+
+function smartScroll(){
+
+  /*
+    فقط وقتی کاربر نزدیک پایین است
+    اسکرول انجام می‌دهیم.
+  */
+
+  if(!userIsNearBottom)
+    return;
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+
+/* =====================================================
+   MENU
+   ===================================================== */
+
+function openMenu(){
+
+  menu.classList.add("show");
+
+  overlay.classList.add("show");
+
+}
+
+
+function closeMenu(){
+
+  menu.classList.remove("show");
+
+  overlay.classList.remove("show");
+
+}
+
+
+document.getElementById("menuBtn")
+  .onclick=openMenu;
+
+document.getElementById("closeMenu")
+  .onclick=closeMenu;
+
+overlay.onclick=closeMenu;
+
+
+/* =====================================================
+   CHAT MANAGEMENT
+   ===================================================== */
+
+function currentChat(){
+
+  return chats.find(
+    c=>c.id===currentId
+  );
+
+}
+
+
+function newChat(){
+
+  const c={
+
+    id:id(),
+
+    title:
+      language==="fa"
+        ? "گفتگوی جدید"
+        : "New chat",
+
+    messages:[],
+
+    createdAt:Date.now()
+
+  };
+
+
+  chats.unshift(c);
+
+  currentId=c.id;
+
+  save();
+
+  render();
+
+  renderHistory();
+
+  closeMenu();
+
+  input.focus();
+
+}
+
+
+function ensureChat(){
+
+  if(currentId && currentChat())
+    return;
+
+  if(chats.length){
+
+    currentId=chats[0].id;
+
+  }else{
+
+    newChat();
+
+  }
+
+}
+
+
+document.getElementById("newChat")
+  .onclick=newChat;
+
+document.getElementById("newChatMenu")
+  .onclick=newChat;
+
+
+/* =====================================================
+   HISTORY
+   ===================================================== */
+
+function renderHistory(query=""){
+
+  const history =
+    document.getElementById("history");
+
+  history.innerHTML="";
+
+
+  const q =
+    query.trim().toLowerCase();
+
+
+  const list =
+    chats.filter(c=>{
+
+      if(!q)return true;
+
+      return c.title
+        .toLowerCase()
+        .includes(q);
+
+    });
+
+
+  if(!list.length){
+
+    history.innerHTML=`
+      <div style="
+        color:var(--muted);
+        font-size:11px;
+        padding:10px;
+      ">
+        چتی پیدا نشد
+      </div>`;
+
+    return;
+
+  }
+
+
+  list.forEach(c=>{
+
+    const row=
+      document.createElement("div");
+
+    row.className="historyItem";
+
+
+    const title=
+      document.createElement("div");
+
+    title.className="historyTitle";
+
+    title.textContent=c.title;
+
+
+    const del=
+      document.createElement("button");
+
+    del.className="historyDelete";
+
+    del.textContent="حذف";
+
+
+    del.onclick=e=>{
+
+      e.stopPropagation();
+
+      chats=
+        chats.filter(
+          x=>x.id!==c.id
+        );
+
+
+      if(currentId===c.id){
+
+        currentId=
+          chats[0]?.id || null;
+
+      }
+
+
+      save();
+
+      render();
+
+      renderHistory();
+
+    };
+
+
+    row.appendChild(title);
+
+    row.appendChild(del);
+
+
+    row.onclick=()=>{
+
+      currentId=c.id;
+
+      render();
+
+      closeMenu();
+
+    };
+
+
+    history.appendChild(row);
+
+  });
+
+}
+
+
+document.getElementById("historySearch")
+  .addEventListener(
+    "input",
+    e=>{
+      renderHistory(e.target.value);
+    }
+  );
+
+
+/* =====================================================
+   RENDER
+   ===================================================== */
+
+function render(){
+
+  const c=currentChat();
+
+
+  messages.innerHTML="";
+
+
+  if(!c || !c.messages.length){
+
+    messages.appendChild(empty);
+
+    empty.style.display="flex";
+
+    return;
+
+  }
+
+
+  empty.style.display="none";
+
+
+  c.messages.forEach(
+    (m,i)=>{
+      createMessageElement(
+        m,
+        i
+      );
+    }
+  );
+
+
+  /*
+    هنگام تغییر کامل چت، پایین برو.
+  */
+
+  userIsNearBottom=true;
+
+  requestAnimationFrame(
+    smartScroll
+  );
+
+}
+
+
+/* =====================================================
+   MARKDOWN
+   ===================================================== */
+
+function markdown(text){
+
+  let html=
+    escapeHTML(text);
+
+
+  /*
+    کدها اول جدا می‌شوند.
+  */
+
+  html=
+    html.replace(
+      /```([\w+-]*)\n?([\s\S]*?)```/g,
+      (_,lang,code)=>{
+
+        const codeId=
+          "code_"+id();
+
+
+        setTimeout(
+          ()=>{
+
+            const btn=
+              document.querySelector(
+                `[data-code-id="${codeId}"]`
+              );
+
+
+            const el=
+              document.getElementById(
+                codeId
+              );
+
+
+            if(btn && el){
+
+              btn.onclick=()=>{
+
+                navigator.clipboard
+                  .writeText(
+                    el.textContent
+                  );
+
+
+                btn.textContent=
+                  "کپی شد";
+
+
+                setTimeout(
+                  ()=>{
+                    btn.textContent=
+                      "کپی کد";
+                  },
+                  1200
+                );
+
+              };
+
+            }
+
+          }
+        );
+
+
+        return `
+          <div class="codeBlock">
+
+            <div class="codeHeader">
+
+              <span>
+                ${lang || "code"}
+              </span>
+
+              <button
+                class="copyCode"
+                data-code-id="${codeId}">
+                کپی کد
+              </button>
+
+            </div>
+
+            <pre
+              class="codeContent"
+              id="${codeId}">${code}</pre>
+
+          </div>
+        `;
+
+      }
+    );
+
+
+  html=
+    html.replace(
+      /`([^`]+)`/g,
+      '<code class="inlineCode">$1</code>'
+    );
+
+
+  html=
+    html.replace(
+      /\*\*(.*?)\*\*/g,
+      "<strong>$1</strong>"
+    );
+
+
+  html=
+    html.replace(
+      /\n/g,
+      "<br>"
+    );
+
+
+  return html;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+   ===================================================== */
+
+function createMessageElement(
+  msg,
+  index
+){
+
+  const wrapper=
+    document.createElement("div");
+
+  wrapper.className=
+    "message "+
+    (
+      msg.role==="user"
+        ? "user"
+        : "ai"
+    );
+
+
+  const inner=
+    document.createElement("div");
+
+  inner.className="messageInner";
+
+
+  const text=
+    document.createElement("div");
+
+  text.className="messageText";
+
+
+  if(msg.role==="assistant"){
+
+    text.innerHTML=
+      markdown(msg.content);
+
+  }else{
+
+    text.textContent=
+      msg.content;
+
+  }
+
+
+  inner.appendChild(text);
+
+
+  if(msg.file){
+
+    const card=
+      document.createElement("div");
+
+    card.className="fileCard";
+
+
+    if(
+      msg.file.type &&
+      msg.file.type.startsWith("image/")
+    ){
+
+      const img=
+        document.createElement("img");
+
+      img.src=
+        msg.file.data;
+
+      card.appendChild(img);
+
+    }
+
+
+    const info=
+      document.createElement("div");
+
+    info.innerHTML=`
+      <div class="fileName">
+        ${escapeHTML(msg.file.name)}
+      </div>
+      <div class="fileType">
+        ${escapeHTML(msg.file.type || "file")}
+      </div>
+    `;
+
+
+    card.appendChild(info);
+
+    inner.appendChild(card);
+
+  }
+
+
+  const actions=
+    document.createElement("div");
+
+  actions.className="actions";
+
+
+  const copy=
+    document.createElement("button");
+
+  copy.textContent=
+    language==="fa"
+      ? "کپی"
+      : "Copy";
+
+
+  copy.onclick=()=>{
+
+    navigator.clipboard.writeText(
+      msg.content
+    );
+
+    toastMessage(
+      language==="fa"
+        ? "کپی شد"
+        : "Copied"
+    );
+
+  };
+
+
+  actions.appendChild(copy);
+
+
+  if(msg.role==="assistant"){
+
+    const share=
+      document.createElement("button");
+
+    share.textContent=
+      language==="fa"
+        ? "اشتراک‌گذاری"
+        : "Share";
+
+
+    share.onclick=()=>{
+
+      if(
+        navigator.share
+      ){
+
+        navigator.share({
+          title:"Tiki AI",
+          text:msg.content
+        });
+
+      }else{
+
+        navigator.clipboard.writeText(
+          msg.content
+        );
+
+        toastMessage(
+          "متن کپی شد"
+        );
+
+      }
+
+    };
+
+
+    actions.appendChild(share);
+
+  }
+
+
+  if(msg.role==="user"){
+
+    const edit=
+      document.createElement("button");
+
+    edit.textContent=
+      language==="fa"
+        ? "ویرایش"
+        : "Edit";
+
+
+    edit.onclick=()=>{
+
+      input.value=
+        msg.content;
+
+      autoResize();
+
+
+      const c=
+        currentChat();
+
+
+      c.messages=
+        c.messages.slice(
+          0,
+          index
+        );
+
+
+      save();
+
+      render();
+
+      input.focus();
+
+    };
+
+
+    actions.appendChild(edit);
+
+  }
+
+
+  inner.appendChild(actions);
+
+  wrapper.appendChild(inner);
+
+  messages.appendChild(wrapper);
+
+}
+
+
+/* =====================================================
+   STREAMING UPDATE
+   ===================================================== */
+
+function updateLastAI(){
+
+  const c=currentChat();
+
+  if(!c)return;
+
+
+  const aiMessages=
+    messages.querySelectorAll(
+      ".message.ai"
+    );
+
+
+  const wrapper=
+    aiMessages[
+      aiMessages.length-1
+    ];
+
+
+  if(!wrapper)return;
+
+
+  const text=
+    wrapper.querySelector(
+      ".messageText"
+    );
+
+
+  if(!text)return;
+
+
+  const ai=
+    c.messages[
+      c.messages.length-1
+    ];
+
+
+  text.innerHTML=
+    markdown(ai.content)+
+    '<span class="cursor"></span>';
+
+
+  /*
+    این قسمت عمداً smartScroll است.
+    اگر کاربر رفته بالا، هیچ کاری نمی‌کند.
+  */
+
+  smartScroll();
+
+}
+
+
+/* =====================================================
+   FILE
+   ===================================================== */
+
+document.getElementById("attach")
+  .onclick=()=>{
+    document.getElementById("file").click();
+  };
+
+
+document.getElementById("file")
+  .onchange=async e=>{
+
+    const file=
+      e.target.files?.[0];
+
+    if(!file)return;
+
+
+    if(
+      file.size >
+      10*1024*1024
+    ){
+
+      toastMessage(
+        "حجم فایل نباید بیشتر از 10MB باشد"
+      );
+
+      return;
+
+    }
+
+
+    attached=file;
+
+
+    document
+      .getElementById("preview")
+      .classList.add("show");
+
+
+    document
+      .getElementById("previewName")
+      .textContent=
+      file.name;
+
+
+    document
+      .getElementById("previewSize")
+      .textContent=
+      formatBytes(file.size);
+
+
+    const img=
+      document.getElementById(
+        "previewImage"
+      );
+
+
+    if(
+      file.type.startsWith("image/")
+    ){
+
+      img.style.display="block";
+
+      img.src=
+        await readDataURL(file);
+
+    }else{
+
+      img.style.display="none";
+
+    }
+
+  };
+
+
+function formatBytes(bytes){
+
+  if(bytes<1024)
+    return bytes+" B";
+
+  if(bytes<1024*1024)
+    return(
+      bytes/1024
+    ).toFixed(1)+" KB";
+
+  return(
+    bytes/(1024*1024)
+  ).toFixed(1)+" MB";
+
+}
+
+
+function readDataURL(file){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const r=
+        new FileReader();
+
+      r.onload=
+        ()=>resolve(r.result);
+
+      r.onerror=
+        reject;
+
+      r.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+function readText(file){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const r=
+        new FileReader();
+
+      r.onload=
+        ()=>resolve(r.result);
+
+      r.onerror=
+        reject;
+
+      r.readAsText(file);
+
+    }
+  );
+
+}
+
+
+document.getElementById("removeFile")
+  .onclick=()=>{
+
+    attached=null;
+
+    document.getElementById("file").value="";
+
+    document
+      .getElementById("preview")
+      .classList.remove("show");
+
+    document
+      .getElementById("previewImage")
+      .src="";
+
+  };
+
+
+/* =====================================================
+   API CONTENT
+   ===================================================== */
+
+async function makeContent(
+  text,
+  file
+){
+
+  if(!file)
+    return text;
+
+
+  if(
+    file.type.startsWith("image/")
+  ){
+
+    const data=
+      await readDataURL(file);
+
+
+    return [
+
+      {
+        type:"text",
+
+        text:
+          text ||
+          "این تصویر را دقیق تحلیل کن."
+
+      },
+
+      {
+        type:"image_url",
+
+        image_url:data
+
+      }
+
+    ];
+
+  }
+
+
+  if(
+    /\.(txt|js|html|css|json|md|csv)$/i
+      .test(file.name)
+  ){
+
+    const content=
+      await readText(file);
+
+
+    return(
+      text+
+      "\n\n--- FILE ---\n"+
+      file.name+
+      "\n\n"+
+      content+
+      "\n\n--- END FILE ---"
+    );
+
+  }
+
+
+  return(
+    text+
+    "\n\nفایل ارسال شده: "+
+    file.name
+  );
+
+}
+
+
+/* =====================================================
+   SEND
+   ===================================================== */
+
+async function sendMessage(){
+
+  if(generating){
+
+    controller?.abort();
+
+    return;
+
+  }
+
+
+  const text=
+    input.value.trim();
+
+
+  if(
+    !text &&
+    !attached
+  )
+    return;
+
+
+  if(
+    API_KEY===
+    "YOUR_MISTRAL_API_KEY"
+  ){
+
+    toastMessage(
+      "کلید API را داخل کد قرار بده"
+    );
+
+    return;
+
+  }
+
+
+  ensureChat();
+
+
+  const c=currentChat();
+
+  const file=attached;
+
+
+  const content=
+    await makeContent(
+      text,
+      file
+    );
+
+
+  let savedFile=null;
+
+
+  if(file){
+
+    savedFile={
+
+      name:file.name,
+
+      type:file.type,
+
+      data:
+        file.type.startsWith("image/")
+          ? await readDataURL(file)
+          : ""
+
+    };
+
+  }
+
+
+  c.messages.push({
+
+    role:"user",
+
+    content:
+      text ||
+      "فایل ارسال شد.",
+
+    apiContent:content,
+
+    file:savedFile
+
+  });
+
+
+  if(
+    c.title==="گفتگوی جدید" ||
+    c.title==="New chat"
+  ){
+
+    c.title=
+      text ||
+      file?.name ||
+      "Tiki AI";
+
+  }
+
+
+  input.value="";
+
+  autoResize();
+
+  attached=null;
+
+  document.getElementById("file").value="";
+
+  document
+    .getElementById("preview")
+    .classList.remove("show");
+
+
+  save();
+
+  renderHistory();
+
+
+  /*
+    بعد از ارسال، کاربر پایین چت است.
+  */
+
+  userIsNearBottom=true;
+
+  render();
+
+
+  generating=true;
+
+  controller=
+    new AbortController();
+
+
+  send.classList.add("stop");
+
+  send.innerHTML=`
+    <svg viewBox="0 0 24 24">
+      <path d="M7 7h10v10H7z"/>
+    </svg>
+  `;
+
+
+  status.textContent=
+    language==="fa"
+      ? "در حال پاسخ‌گویی"
+      : "Generating";
+
+
+  try{
+
+    const hasImage=
+      c.messages.some(
+        m=>
+          m.file &&
+          m.file.type &&
+          m.file.type.startsWith("image/")
+      );
+
+
+    const model=
+      hasImage
+        ? VISION_MODEL
+        : TEXT_MODEL;
+
+
+    const apiMessages=[
+
+      {
+
+        role:"system",
+
+        content:
+          language==="fa"
+            ?
+            "تو Tiki AI هستی. پاسخ‌های دقیق، حرفه‌ای، روان و کاربردی بده. اگر کاربر کد یا اپلیکیشن خواست، کد کامل و قابل اجرا ارائه کن. متن و کد را واضح و مرتب جدا کن."
+            :
+            "You are Tiki AI. Give accurate, professional and useful answers. When the user asks for code or an application, provide complete runnable code. Clearly separate normal text and code."
+
+      },
+
+      ...c.messages.map(
+        m=>({
+
+          role:m.role,
+
+          content:
+            m.apiContent ??
+            m.content
+
+        })
+      )
+
+    ];
+
+
+    const response=
+      await fetch(
+        API_URL,
+        {
+
+          method:"POST",
+
+          headers:{
+
+            "Content-Type":
+              "application/json",
+
+            "Authorization":
+              "Bearer "+
+              API_KEY
+
+          },
+
+          body:JSON.stringify({
+
+            model,
+
+            messages:apiMessages,
+
+            stream:true,
+
+            temperature:.6,
+
+            max_tokens:4096
+
+          }),
+
+          signal:
+            controller.signal
+
+        }
+      );
+
+
+    if(!response.ok){
+
+      let errorText="";
+
+      try{
+
+        const data=
+          await response.json();
+
+        errorText=
+          data?.message ||
+          data?.error?.message ||
+          "";
+
+      }catch(e){}
+
+
+      throw new Error(
+        response.status+
+        " "+
+        errorText
+      );
+
+    }
+
+
+    const ai={
+
+      role:"assistant",
+
+      content:""
+
+    };
+
+
+    c.messages.push(ai);
+
+
+    /*
+      فقط یک بار DOM را می‌سازیم.
+      سپس updateLastAI فقط همان حباب را
+      تغییر می‌دهد.
+    */
+
+    createMessageElement(
+      ai,
+      c.messages.length-1
+    );
+
+
+    const reader=
+      response.body.getReader();
+
+    const decoder=
+      new TextDecoder();
+
+    let buffer="";
+
+
+    while(true){
+
+      const {
+        value,
+        done
+      }=
+        await reader.read();
+
+
+      if(done)break;
+
+
+      buffer+=
+        decoder.decode(
+          value,
+          {stream:true}
+        );
+
+
+      const lines=
+        buffer.split("\n");
+
+
+      buffer=
+        lines.pop() || "";
+
+
+      for(
+        const raw of lines
+      ){
+
+        const line=
+          raw.trim();
+
+
+        if(
+          !line ||
+          !line.startsWith("data:")
+        )
+          continue;
+
+
+        const data=
+          line.slice(5).trim();
+
+
+        if(data==="[DONE]")
+          continue;
+
+
+        try{
+
+          const json=
+            JSON.parse(data);
+
+
+          const delta=
+            json
+              ?.choices
+              ?.[0]
+              ?.delta
+              ?.content;
+
+
+          if(
+            typeof delta==="string"
+          ){
+
+            ai.content+=delta;
+
+            updateLastAI();
+
+          }
+
+        }catch(e){}
+
+      }
+
+    }
+
+
+    save();
+
+
+  }catch(e){
+
+    if(
+      e.name==="AbortError"
+    ){
+
+      toastMessage(
+        "پاسخ متوقف شد"
+      );
+
+    }else{
+
+      console.error(e);
+
+
+      let msg=
+        "خطا در اتصال به API";
+
+
+      if(
+        String(e.message)
+          .includes("401")
+      )
+        msg="API Key نامعتبر است";
+
+
+      if(
+        String(e.message)
+          .includes("403")
+      )
+        msg="دسترسی API رد شد";
+
+
+      if(
+        String(e.message)
+          .includes("429")
+      )
+        msg="محدودیت درخواست فعال است";
+
+
+      c.messages.push({
+
+        role:"assistant",
+
+        content:msg
+
+      });
+
+
+      render();
+
+      toastMessage(msg);
+
+    }
+
+  }finally{
+
+    generating=false;
+
+    controller=null;
+
+    send.classList.remove("stop");
+
+    send.innerHTML=`
+      <svg viewBox="0 0 24 24">
+        <path d="M22 2L11 13"/>
+        <path d="M22 2l-7 20-9-4z"/>
+      </svg>
+    `;
+
+
+    status.textContent=
+      language==="fa"
+        ? "آماده"
+        : "Ready";
+
+
+    save();
+
+  }
+
+}
+
+
+/* =====================================================
+   INPUT
+   ===================================================== */
+
+function autoResize(){
+
+  input.style.height="auto";
+
+  input.style.height=
+    Math.min(
+      input.scrollHeight,
+      160
+    )+"px";
+
+}
+
+
+input.addEventListener(
+  "input",
+  autoResize
+);
+
+
+input.addEventListener(
+  "keydown",
+  e=>{
+
+    if(
+      e.key==="Enter" &&
+      !e.shiftKey
+    ){
+
+      e.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+
+send.onclick=
+  sendMessage;
+
+
+/* =====================================================
+   THEME
+   ===================================================== */
+
+const themeSwitch=
+  document.getElementById(
+    "themeSwitch"
+  );
+
+
+try{
+
+  if(
+    localStorage.getItem(
+      "tiki_theme"
+    )==="light"
+  ){
+
+    document.body.classList.add("light");
+
+    themeSwitch.classList.add("on");
+
+  }
+
+}catch(e){}
+
+
+themeSwitch.onclick=()=>{
+
+  const light=
+    document.body.classList.toggle(
+      "light"
+    );
+
+
+  themeSwitch.classList.toggle(
+    "on",
+    light
+  );
+
+
+  localStorage.setItem(
+    "tiki_theme",
+    light
+      ? "light"
+      : "dark"
+  );
+
+};
+
+
+/* =====================================================
+   SETTINGS
+   ===================================================== */
+
+const settingsModal=
+  document.getElementById(
+    "settingsModal"
+  );
+
+
+document.getElementById("settingsBtn")
+  .onclick=()=>{
+
+    closeMenu();
+
+    settingsModal.classList.add(
+      "show"
+    );
+
+  };
+
+
+document.getElementById("closeSettings")
+  .onclick=()=>{
+
+    settingsModal.classList.remove(
+      "show"
+    );
+
+  };
+
+
+settingsModal.onclick=e=>{
+
+  if(
+    e.target===settingsModal
+  )
+    settingsModal.classList.remove(
+      "show"
+    );
+
+};
+
+
+/* =====================================================
+   ABOUT
+   ===================================================== */
+
+const aboutModal=
+  document.getElementById(
+    "aboutModal"
+  );
+
+
+document.getElementById("aboutBtn")
+  .onclick=()=>{
+
+    closeMenu();
+
+    aboutModal.classList.add(
+      "show"
+    );
+
+  };
+
+
+document.getElementById("closeAbout")
+  .onclick=()=>{
+
+    aboutModal.classList.remove(
+      "show"
+    );
+
+  };
+
+
+aboutModal.onclick=e=>{
+
+  if(
+    e.target===aboutModal
+  )
+    aboutModal.classList.remove(
+      "show"
+    );
+
+};
+
+
+/* =====================================================
+   LANGUAGE
+   ===================================================== */
+
+document.getElementById("faBtn")
+  .onclick=()=>setLanguage("fa");
+
+
+document.getElementById("enBtn")
+  .onclick=()=>setLanguage("en");
+
+
+function setLanguage(lang){
+
+  language=lang;
+
+
+  localStorage.setItem(
+    "tiki_language",
+    lang
+  );
+
+
+  document.documentElement.lang=
+    lang;
+
+
+  document.documentElement.dir=
+    lang==="fa"
+      ? "rtl"
+      : "ltr";
+
+
+  document.getElementById("faBtn")
+    .classList.toggle(
+      "active",
+      lang==="fa"
+    );
+
+
+  document.getElementById("enBtn")
+    .classList.toggle(
+      "active",
+      lang==="en"
+    );
+
+
+  input.placeholder=
+    lang==="fa"
+      ? "پیامت را بنویس..."
+      : "Write a message...";
+
+
+  document.getElementById("welcome")
+    .textContent=
+    lang==="fa"
+      ? "چه کاری می‌توانم برایت انجام دهم؟"
+      : "How can I help you?";
+
+
+  renderHistory();
+
+}
+
+
+/* =====================================================
+   SUPPORT
+   ===================================================== */
+
+const PHONE=
+  "989011268205";
+
+
+document.getElementById("whatsapp")
+  .onclick=()=>{
+
+    window.open(
+      "https://wa.me/"+PHONE,
+      "_blank"
+    );
+
+  };
+
+
+document.getElementById("telegram")
+  .onclick=()=>{
+
+    window.open(
+      "https://t.me/+"+PHONE,
+      "_blank"
+    );
+
+  };
+
+
+/* =====================================================
+   DELETE ALL
+   ===================================================== */
+
+document.getElementById("deleteAll")
+  .onclick=()=>{
+
+    if(
+      !confirm(
+        language==="fa"
+          ? "همه گفتگوها حذف شوند؟"
+          : "Delete all chats?"
+      )
+    )
+      return;
+
+
+    chats=[];
+
+    currentId=null;
+
+    save();
+
+    render();
+
+    renderHistory();
+
+    closeMenu();
+
+  };
+
+
+/* =====================================================
+   INIT
+   ===================================================== */
+
+try{
+
+  language=
+    localStorage.getItem(
+      "tiki_language"
+    ) || "fa";
+
+}catch(e){
+
+  language="fa";
+
+}
+
+
+load();
+
+
+if(chats.length){
+
+  currentId=chats[0].id;
+
+  render();
+
+}else{
+
+  render();
+
+}
+
+
+renderHistory();
+
+setLanguage(language);
+
+</script>
+
 </body>
 </html>
